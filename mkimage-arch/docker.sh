@@ -77,7 +77,7 @@ EOF
 
 arch-chroot $ROOTFS /bin/sh -c 'rm -r /usr/share/man/*'
 arch-chroot $ROOTFS /bin/sh -c 'mkdir -p /run/shm'
-arch-chroot $ROOTFS /bin/sh -c 'curl https://raw.githubusercontent.com/ArchLinuxJP/docker-arch/master/dockerfile/docker-arch/bin/docker-arch -o /usr/bin/docker-arch;chmod +x /usr/bin/docker-arch;export PATH=$PATH:/usr/bin'
+arch-chroot $ROOTFS /bin/sh -c 'curl -sL raw.githubusercontent.com/ArchLinuxJP/docker-arch/master/dockerfile/docker-arch/bin/docker-arch -o /usr/bin/docker-arch;chmod +x /usr/bin/docker-arch;export PATH=$PATH:/usr/bin'
 arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged;pacman-key --populate $ARCH_KEYRING; pacman -S docker --noconfirm; pacman -Scc --noconfirm;pkill gpg-agent"
 #arch-chroot $ROOTFS /bin/sh -c "ln -s /usr/share/zoneinfo/JST /etc/localtime"
 #echo -e "en_US.UTF-8 UTF-8\nja_JP.UTF-8 UTF-8" > $ROOTFS/etc/locale.gen
