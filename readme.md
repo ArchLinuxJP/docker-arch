@@ -33,3 +33,7 @@ $ sudo docker exec $id docker-arch base
 $ sudo docker exec $id /bin/bash /mkimage-arch-jp.sh
 ```
 
+## 履歴
+
+2017.01.29 複数あったGitHubリポジトリを`archlinuxjp/docker-arch`に集約しました。
+
