@@ -1,0 +1,34 @@
+sudo: required
+
+language: ruby
+
+services:
+  - docker
+
+env:
+  - TARGET_CONTAINER_ID=container-$DOCKER_REPO
+
+script:
+  - docker build -t $DOCKER_REPO_TMP ./dockerfile/docker-arch
+  - docker build -t base ./dockerfile/archlinux
+  - docker build -t min ./dockerfile/archlinux-min
+  - docker build -t yaourt ./dockerfile/archlinux-yaourt
+  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it $DOCKER_REPO_TMP /bin/bash /mkimage-arch-jp.sh
+  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it base /bin/bash /mkimage-arch-jp.sh
+  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it min /bin/bash /mkimage-arch-jp.sh
+  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it yaourt /bin/bash /mkimage-arch-jp.sh
+
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+        docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+        docker push $DOCKER_TEARM/$DOCKER_REPO;
+        docker push $DOCKER_TEARM/archlinux;
+        docker push $DOCKER_TEARM/archlinux-min;
+        docker push $DOCKER_TEARM/archlinux-yaourt;
+        export text=`docker images`;
+        curl -X POST "$SLACK_WEB_URL" -d "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"docker\", \"text\":\"$text\", \"icon_emoji\":\":docker:\"}";
+  fi
+
+notifications:
+  slack:
+    secure: L6ziSyG6cBD4sI5ZhOR9/K9lc6G/jcnl/5emBqwJgN6GCUk/HjQOWbdHr0ZB9rI5clwI2FQiZTraP2MWhgaemQhwjdrWNefGua1HzZf9EiyMAco/7huFKADFppV11iEvATgu5fDnDzhEf70TZ6ShD3bNfMIrI3OW0fvEeMEmB666Cr1O+l5gWV54Qq20nqktRt/lCjgD5xQdbmgLrDXwGTLGGj4ccwmxio2pTTelQP4ePwk28RyomXlFL7+XtVbARJTZKHBkvQQI0c3n/XGsV+zSUKdWByV1w6xm4sS19SlR3K4EGBjm2clZhcgIA5X7B7h9EOEjMz0NIT4BPXAWGZpDVJYzEpwThl1rd+vsOsBvjupYG+NGpNTMoMVJyQqLbI5DB0wTZdIyiJccWhjkGhL937y086/6g+3dQffhW4KTEjUdfuP3dJLbvZIhqm5cw2BLb5P6R3YP4Jln9Ye61GgJUyjDZ0UmcHo7CYQWyq8waImb6C95jV9Ht53rnwNdpGepwWmQpKFK0jTxOghYd6B7w633b4eWx9UUU74vMPerHh0bH3gmZL1gHVlFmxMNZk5shTqDVGpFpPW4pFigIUWrx3OPSleHQraq0N8ZiE4UeocwyZJKfkVf0Ww+B01EhtV8D1VSeTlTguEAyyTxEaS+8yqwCc18N2YUgX7+e6E=

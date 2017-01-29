@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -Ceu
+raw=https://raw.githubusercontent.com/ArchLinuxJP/docker-mkimage-arch/master/mkimage-arch
+sname=/mkimage-arch-jp.sh
+cname=/mkimage-arch-pacman.conf 
+cbase=$raw/base.conf
+
+if [ -f $sname ];then
+	rm $sname
+fi
+if [ -f $cname ];then
+	rm $cname
+fi
+if [ -f $cbase ];then
+	rm $cbase
+fi
+mkdir -p /run/shm
+
+case $1 in
+	[hH]|[hH]elp|-[hH]elp|--[hH]elp)
+		echo -e "$ docker-arch \$1\n\n"
+		if [ -f /usr/bin/docker-arch ];then
+			cat /usr/bin/docker-arch
+		fi
+	;;
+	docker)
+		curl -sL $raw/docker.sh -o $sname
+		curl -sL $cbase -o $cname
+	;;
+	yaourt)
+		curl -sL $raw/$1.sh -o $sname
+		curl -sL $raw/$1.conf -o $cname
+	;;
+	min)
+		curl -sL $raw/min.sh -o $sname
+		curl -sL $cbase -o $cname
+	;;
+	test)
+		curl -sL $raw/test.sh -o $sname
+		curl -sL $cbase -o $cname
+	;;
+	*)
+		curl -sL $raw/base.sh -o $sname
+		curl -sL $cbase -o $cname
+	;;
+esac
