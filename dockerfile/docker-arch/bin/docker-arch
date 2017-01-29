@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -Ceu
-raw=https://raw.githubusercontent.com/ArchLinuxJP/docker-mkimage-arch/master/mkimage-arch
+raw=https://raw.githubusercontent.com/ArchLinuxJP/docker-arch/master/mkimage-arch
 sname=/mkimage-arch-jp.sh
 cname=/mkimage-arch-pacman.conf 
 cbase=$raw/base.conf
