@@ -6,14 +6,14 @@ services:
   - docker
 
 env:
-  - TARGET_CONTAINER_ID=container-$DOCKER_REPO
+  - TARGET_CONTAINER_ID=container-docker-arch
 
 script:
-  - docker build -t $DOCKER_REPO_TMP ./dockerfile/docker-arch
+  - docker build -t tmp ./dockerfile/docker-arch
   - docker build -t base ./dockerfile/archlinux
   - docker build -t min ./dockerfile/archlinux-min
   - docker build -t yaourt ./dockerfile/archlinux-yaourt
-  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it $DOCKER_REPO_TMP /bin/bash /mkimage-arch-jp.sh
+  - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it tmp /bin/bash /mkimage-arch-jp.sh
   - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it base /bin/bash /mkimage-arch-jp.sh
   - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it min /bin/bash /mkimage-arch-jp.sh
   - docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it yaourt /bin/bash /mkimage-arch-jp.sh
@@ -21,7 +21,7 @@ script:
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
         docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-        docker push $DOCKER_TEARM/$DOCKER_REPO;
+        docker push $DOCKER_TEARM/docker-arch;
         docker push $DOCKER_TEARM/archlinux;
         docker push $DOCKER_TEARM/archlinux-min;
         docker push $DOCKER_TEARM/archlinux-yaourt;
