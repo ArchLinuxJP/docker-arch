@@ -1,2 +1,2 @@
 FROM archlinuxjp/docker-arch
-RUN docker-arch base
+RUN docker-arch -l base

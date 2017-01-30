@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -Ceu
-raw=https://raw.githubusercontent.com/ArchLinuxJP/docker-arch/master/mkimage-arch
+raw=https://raw.githubusercontent.com/ArchLinuxJP/docker-arch/master/dockerfile/docker-arch/mkimage-arch
 sname=/mkimage-arch-jp.sh
 cname=/mkimage-arch-pacman.conf 
 cbase=$raw/base.conf
@@ -24,24 +24,34 @@ case $1 in
 			cat /usr/bin/docker-arch
 		fi
 	;;
-	docker)
-		curl -sL $raw/docker.sh -o $sname
+	-l)
+		:
+	;;
+	docker|min|test|base)
+		curl -sL $raw/$1.sh -o $sname
 		curl -sL $cbase -o $cname
 	;;
 	yaourt)
 		curl -sL $raw/$1.sh -o $sname
 		curl -sL $raw/$1.conf -o $cname
 	;;
-	min)
-		curl -sL $raw/min.sh -o $sname
-		curl -sL $cbase -o $cname
+esac
+
+if [ "$1" != "-l" ];then
+	exit
+fi
+
+case $2 in
+	docker|min|test|base)
+		raw=/mkimage-arch/$2.sh
+		cbase=/mkimage-arch/base.conf
+		cp -rf $raw $sname
+		cp -rf $cbase $cname
 	;;
-	test)
-		curl -sL $raw/test.sh -o $sname
-		curl -sL $cbase -o $cname
-	;;
-	*)
-		curl -sL $raw/base.sh -o $sname
-		curl -sL $cbase -o $cname
+	yaourt)
+		raw=/mkimage-arch/$2.sh
+		cbase=/mkimage-arch/$2.conf
+		cp -rf $raw $sname
+		cp -rf $cbase $cname
 	;;
 esac

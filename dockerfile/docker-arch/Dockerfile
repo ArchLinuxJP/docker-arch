@@ -2,7 +2,7 @@ FROM archlinuxjp/archlinux
 
 RUN pacman -Syy arch-install-scripts expect docker --noconfirm
 RUN mkdir -p /run/shm
-ADD bin/mkimage-arch-jp.sh /
-ADD bin/mkimage-arch-pacman.conf /
-
+RUN mkdir -p /mkimage-arch
+ADD bin /
+COPY mkimage-arch /mkimage-arch/
 CMD /bin/bash

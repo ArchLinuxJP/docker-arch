@@ -1,2 +1,2 @@
 FROM archlinuxjp/docker-arch
-RUN docker-arch min
+RUN docker-arch -l min

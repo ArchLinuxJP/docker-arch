@@ -1,2 +1,2 @@
 FROM archlinuxjp/docker-arch
-RUN docker-arch -l yaourt
+RUN docker-arch -l test
