@@ -27,7 +27,7 @@ case $1 in
 	-l)
 		:
 	;;
-	docker|min|test|base)
+	docker|min|test|base|kernel)
 		curl -sL $raw/$1.sh -o $sname
 		curl -sL $cbase -o $cname
 	;;
@@ -42,7 +42,7 @@ if [ "$1" != "-l" ];then
 fi
 
 case $2 in
-	docker|min|test|base)
+	docker|min|test|base|kernel)
 		raw=/mkimage-arch/$2.sh
 		cbase=/mkimage-arch/base.conf
 		cp -rf $raw $sname
