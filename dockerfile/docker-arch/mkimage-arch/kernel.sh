@@ -53,7 +53,7 @@ PACMAN_MIRRORLIST="Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/\$repo
 PACMAN_EXTRA_PKGS=''
 EXPECT_TIMEOUT=200
 ARCH_KEYRING=archlinux
-DOCKER_IMAGE_NAME=archlinuxjp/archlinux
+DOCKER_IMAGE_NAME=archlinuxjp/archlinux-kernel
 
 
 export PACMAN_MIRRORLIST
