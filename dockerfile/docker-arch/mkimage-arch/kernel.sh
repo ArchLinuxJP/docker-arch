@@ -76,11 +76,13 @@ expect <<EOF
 EOF
 
 arch-chroot $ROOTFS /bin/sh -c 'rm -r /usr/share/man/*'
-arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged;pacman-key --populate $ARCH_KEYRING; pkill gpg-agent;pacman -Syu linux --noconfirm;pacman -Scc --noconfirm"
-arch-chroot $ROOTFS /bin/sh -c "ln -s /usr/share/zoneinfo/JST /etc/localtime"
+arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged;pacman-key --populate $ARCH_KEYRING; pkill gpg-agent"
+#arch-chroot $ROOTFS /bin/sh -c "ln -s /usr/share/zoneinfo/JST /etc/localtime"
 echo -e "en_US.UTF-8 UTF-8\nja_JP.UTF-8 UTF-8" > $ROOTFS/etc/locale.gen
 arch-chroot $ROOTFS locale-gen
 arch-chroot $ROOTFS /bin/sh -c 'echo -e $PACMAN_MIRRORLIST > /etc/pacman.d/mirrorlist'
+arch-chroot $ROOTFS /bin/sh -c 'pacman -Syu linux --noconfirm'
+arch-chroot $ROOTFS /bin/sh -c 'pacman -Scc --noconfirm'
 
 # udev doesn't work in containers, rebuild /dev
 DEV=$ROOTFS/dev
