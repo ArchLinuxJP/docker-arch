@@ -37,3 +37,16 @@ $ sudo docker exec $id /bin/bash /mkimage-arch-jp.sh
 
 2017.01.29 複数あったGitHubリポジトリを`archlinuxjp/docker-arch`に集約しました。
 
+2017.07.27 yaourtのbuild処理が失敗するので一旦無効にしました。
+
+> .travis.yml
+
+```
+docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it yaourt /bin/bash /mkimage-arch-jp.sh;
+docker push $DOCKER_TEARM/archlinux-yaourt;
+```
+
+2017.07.27 docker hubでsource linkがgithubにリンクされており、そのリンクが無効であったため、一旦、当該docker hubのrepositoryを削除後に再度repositoryを作成することにより無効リンクの表示を直しました。
+
+注意点として、この作業は仕組み自体がdockerイメージの再利用であることから、docker repoを削除後、手動でdocker pushしなければなりませんでした。よって、repositoryを削除する前にdockr pullしておく必要がありました。
+
