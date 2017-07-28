@@ -1,5 +1,7 @@
 sudo: required
 
+install: travis_wait mvn install
+
 language: ruby
 
 services:
@@ -18,10 +20,13 @@ after_success:
         docker push $DOCKER_TEARM/docker-arch;
         docker build -t base ./dockerfile/archlinux;
         docker build -t min ./dockerfile/archlinux-min;
+        docker build -t yaourt ./dockerfile/archlinux-yaourt;
         docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it base /bin/bash /mkimage-arch-jp.sh;
         docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it min /bin/bash /mkimage-arch-jp.sh;
+        docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it yaourt /bin/bash /mkimage-arch-jp.sh;
         docker push $DOCKER_TEARM/archlinux;
         docker push $DOCKER_TEARM/archlinux-min;
+        docker push $DOCKER_TEARM/archlinux-yaourt;
         export text=`docker images`;
         curl -X POST "$SLACK_WEB_URL" -d "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"docker\", \"text\":\"$text\", \"icon_emoji\":\":docker:\"}";
   fi
