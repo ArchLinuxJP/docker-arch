@@ -1,10 +1,12 @@
 # docker-arch
 
-https://hub.docker.com/r/archlinuxjp
-
 [![Build Status](https://travis-ci.org/ArchLinuxJP/docker-archlinux.svg?branch=master)](https://travis-ci.org/ArchLinuxJP/docker-arch)
 
-Arch LinuxのDockerイメージをDocker Hubにて配布しています。常に最新のイメージを使用することができます。
+source : https://github.com/ArchLinuxJP/docker-arch
+
+download : https://hub.docker.com/r/archlinuxjp
+
+Arch LinuxのDockerイメージを[Docker Hub](https://hub.docker.com/r/archlinuxjp)にて配布しています。常に最新のイメージを使用することができます。
 
 これらのDockerイメージは[GitHubリポジトリ](https://github.com/archlinuxjp/docker-arch)からTravis CIでPushされ、`Cron Jobs`の機能によって日々更新されています。
 
@@ -69,5 +71,5 @@ travis-ciのcronを介して日々アップデートする理由は、archlinux�
 
 2017.07.27 docker hubでsource linkがgithubにリンクされており、そのリンクが無効であったため、一旦、当該docker hubのrepositoryを削除後に再度repositoryを作成することにより無効リンクの表示を直しました。 [#4](https://github.com/ArchLinuxJP/docker-arch/issues/4)
 
-2017.07.28 yaourtのイメージを更新するための処理及びリポジトリを分離しました。 [#3](https://github.com/ArchLinuxJP/docker-arch/issues/3)
+2017.07.28 yaourtのイメージを更新するための処理及びリポジトリを分離しました。 [#3](https://github.com/ArchLinuxJP/docker-arch/issues/3) [repo](https://github.com/ArchLinuxJP/docker-yaourt)
 
