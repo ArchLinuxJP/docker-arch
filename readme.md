@@ -71,5 +71,4 @@ travis-ciのcronを介して日々アップデートする理由は、archlinux�
 
 2017.07.27 docker hubでsource linkがgithubにリンクされており、そのリンクが無効であったため、一旦、当該docker hubのrepositoryを削除後に再度repositoryを作成することにより無効リンクの表示を直しました。 [#4](https://github.com/ArchLinuxJP/docker-arch/issues/4)
 
-2017.07.28 yaourtのイメージを更新するための処理及びリポジトリを分離しました。 [#3](https://github.com/ArchLinuxJP/docker-arch/issues/3) [repo](https://github.com/ArchLinuxJP/docker-yaourt)
 
