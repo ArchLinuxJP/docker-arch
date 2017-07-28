@@ -51,17 +51,15 @@ $ sudo docker exec $id /bin/bash /mkimage-arch-jp.sh
 
 ## なぜイメージを日々アップデートするのか?
 
-travis-ciのcronを介して日々アップデートする理由は、archlinuxのdocker imageがアップデートされずに古くなってしまうことでpacman -Syuができなくなり壊れてしまう危険を回避するためです。
+archlinuxのdocker imageをtravis-ciのcronを介して日々アップデートする理由は、archlinuxのdocker imageがアップデートされずに古くなってしまうことでpacman -Syuができなくなり壊れてしまう危険を回避するためです。
 
 また、当該docker imageを使用する利用者にとっても古いイメージはアップデートに時間がかかってしまい、その辺のタイムロスを縮小する狙いもあります。(dockerfileに最初にpacman -Syuのようなパッケージアップデートの処理を書く人が多いため)
 
 ## なぜpacman -Syuでアップデートしないのか?
 
-実はこの仕組をdockerfileに書いた`pacman -Syu`でイメージをアップデートしdocker pushしていた時期がありました。しかし、それではイメージサイズが肥大化してしまうことがわかり、やり方を変える必要があったためです。
+実はこの仕組は以前、dockerfileに書いた`RUN pacman -Syu`によってアップデートし、それをdocker pushしていた時期がありました。しかし、これではイメージサイズが肥大化していくことがわかり、やり方を変える必要がありました。なぜなら、その処理自体に前日イメージを使用するからです。
 
-イメージサイズの肥大化を抑えるには、イメージ生成自体を自動化し、その処理を日々実行することでそれを実現する方法を採用することになりました。
-
-この処理、つまり各イメージの生成を実行するスクリプトは`/dockerfile/docker-arch/mkimage-arch/`以下にあります。
+ここで、イメージサイズの肥大化を抑えるためには、イメージ生成自体を自動化して、その処理を日々実行することでそれを実現する方法を採用することになりました。なお、この処理、つまり各イメージの生成を実行するスクリプトは`/dockerfile/docker-arch/mkimage-arch/`以下にあります。
 
 ## 履歴
 
@@ -70,5 +68,4 @@ travis-ciのcronを介して日々アップデートする理由は、archlinux�
 2017.07.27 yaourtのbuild処理が失敗するので一旦無効にしました。[#3](https://github.com/ArchLinuxJP/docker-arch/issues/3)
 
 2017.07.27 docker hubでsource linkがgithubにリンクされており、そのリンクが無効であったため、一旦、当該docker hubのrepositoryを削除後に再度repositoryを作成することにより無効リンクの表示を直しました。 [#4](https://github.com/ArchLinuxJP/docker-arch/issues/4)
-
 
