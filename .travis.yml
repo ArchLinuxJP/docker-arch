@@ -1,7 +1,5 @@
 sudo: required
 
-install: travis_wait mvn install
-
 language: ruby
 
 services:
@@ -23,6 +21,7 @@ after_success:
         docker build -t yaourt ./dockerfile/archlinux-yaourt;
         docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it base /bin/bash /mkimage-arch-jp.sh;
         docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it min /bin/bash /mkimage-arch-jp.sh;
+        travis_wait 30 mvn install;
         docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -it yaourt /bin/bash /mkimage-arch-jp.sh;
         docker push $DOCKER_TEARM/archlinux;
         docker push $DOCKER_TEARM/archlinux-min;
