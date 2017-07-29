@@ -8,7 +8,7 @@ download : https://hub.docker.com/r/archlinuxjp
 
 Arch LinuxのDockerイメージを[Docker Hub](https://hub.docker.com/r/archlinuxjp)にて配布しています。常に最新のイメージを使用することができます。
 
-これらのDockerイメージは[GitHubリポジトリ](https://github.com/archlinuxjp/docker-arch)からTravis CIでPushされ、`Cron Jobs`の機能によって日々更新されています。
+これらのDockerイメージは[GitHubリポジトリ](https://github.com/archlinuxjp/docker-arch)からTravis CIでdocker hubにpushされ、`Cron Jobs`の機能によって日々更新されています。
 
 使用するスクリプトは[docker/docker](https://github.com/docker/docker/blob/master/contrib/mkimage-arch.sh)のスクリプトを参考に作成されています。スクリプトは`/dockerfile/docker-arch/mkimage-arch/`以下にあります。
 
@@ -57,9 +57,11 @@ archlinuxのdocker imageをtravis-ciのcronを介して日々アップデート�
 
 ## なぜpacman -Syuでアップデートしないのか?
 
-実はこの仕組は以前、dockerfileに書いた`RUN pacman -Syu`によってアップデートし、それをdocker pushしていた時期がありました。しかし、これではイメージサイズが肥大化していくことがわかり、やり方を変える必要がありました。なぜなら、その処理自体に前日イメージを使用するからです。
+以前はdockerfileに書いた`RUN pacman -Syu`によってアップデートしたものをdocker pushしていた時期がありました。しかし、これではイメージサイズが肥大化していくことがわかりました。なぜなら、その処理自体に前日イメージを使用するからです。よって、肥大化を防ぐためにやり方を変える必要がありました。
 
-ここで、イメージサイズの肥大化を抑えるためには、イメージ生成自体を自動化して、その処理を日々実行することでそれを実現する方法を採用することになりました。なお、この処理、つまり各イメージの生成を実行するスクリプトは`/dockerfile/docker-arch/mkimage-arch/`以下にあります。
+ここで、イメージサイズの肥大化を抑えるためには、イメージのアプデートではなく、イメージ生成自体を自動化し、その処理を日々実行することでそれを実現する方法を採用することになりました。
+
+なお、この処理、つまり各archlinuxのイメージがどのように生成されているかは、それを実行するスクリプトである`/dockerfile/docker-arch/mkimage-arch/`以下を確認してください。
 
 ## 履歴
 
@@ -68,4 +70,6 @@ archlinuxのdocker imageをtravis-ciのcronを介して日々アップデート�
 2017.07.27 yaourtのbuild処理が失敗するので一旦無効にしました。[#3](https://github.com/ArchLinuxJP/docker-arch/issues/3)
 
 2017.07.27 docker hubでsource linkがgithubにリンクされており、そのリンクが無効であったため、一旦、当該docker hubのrepositoryを削除後に再度repositoryを作成することにより無効リンクの表示を直しました。 [#4](https://github.com/ArchLinuxJP/docker-arch/issues/4)
+
+2017.07.29 travisで10分間出力がない場合に処理を停止する問題(yaourt build時)は`travis_retry`を使うことで解決しました。 [#3](https://github.com/ArchLinuxJP/docker-arch/issues/3)
 
