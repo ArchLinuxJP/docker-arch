@@ -49,7 +49,7 @@ PKGIGNORE="${PKGIGNORE[*]}"
 unset IFS
 
 PACMAN_CONF='./mkimage-arch-pacman.conf'
-PACMAN_MIRRORLIST="Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/\$repo/os/\$arch\nServer = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/\$repo/os/\$arch"
+PACMAN_MIRRORLIST="Server = http://mirror.archlinux.jp/\$repo/os/\$arch\nServer = https://jpn.mirror.pkgbuild.com/\$repo/os/\$arch"
 YAOURT="[archlinuxfr]\nSigLevel = Never\nServer = http://repo.archlinux.fr/\$arch"
 SUDO="Defaults env_keep += \"http_proxy\"\nDefaults env_keep += \"https_proxy\"\nDefaults env_keep += \"ftp_proxy\"\nyaourt ALL = (root) NOPASSWD: /usr/bin/pacman"
 PACMAN_EXTRA_PKGS=''

@@ -49,7 +49,7 @@ PKGIGNORE="${PKGIGNORE[*]}"
 unset IFS
 
 PACMAN_CONF='./mkimage-arch-pacman.conf'
-PACMAN_MIRRORLIST="Server = http://ftp.tsukuba.wide.ad.jp/Linux/archlinux/\$repo/os/\$arch\nServer = http://ftp.jaist.ac.jp/pub/Linux/ArchLinux/\$repo/os/\$arch"
+PACMAN_MIRRORLIST="Server = http://mirror.archlinux.jp/\$repo/os/\$arch\nServer = https://jpn.mirror.pkgbuild.com/\$repo/os/\$arch"
 PACMAN_EXTRA_PKGS=''
 EXPECT_TIMEOUT=200
 ARCH_KEYRING=archlinux
