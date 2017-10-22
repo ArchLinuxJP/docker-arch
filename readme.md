@@ -65,14 +65,20 @@ archlinuxのdocker imageをtravis-ciのcronを介して日々アップデート�
 
 ## archlinuxjp/archlinuxが動作しない場合の直し方
 
+docker-archはエコシステムで回しているので、`FROM archlinuxjp/archlinux`が動作しない場合、なかなか正常に動きません。
+
+このような場合は手動でDocker Hubにpushする必要があります。修正する必要があるのは`FROM archlinuxjp/archlinux`, `FROM archlinuxjp/docker-arch`です。
+
 - まず、archlinuxを起動し、dockerを動かします。
 
 - このリポジトリをクローンして、必要なファイル`mkimage-arch-jp.sh`や`base.sh`などを修正した上で以下を実行します。
 
 ```sh
+# FROM archlinuxjp/docker-arch
 $ git clone https://github.com/archlinuxjp/docker-arch
 $ cd docker-arch/dockerfile/docker-arch/bin
 $ vim mkimage-arch-jp.sh 
+	# ファイルの置き場所を参照します。通常はdocker in dockerの構成になっていますが、手動でやる場合は当該ディレクトリ上のファイルを参照します
 	- cp -rf /docker-arch $ROOTFS
 	- cp -rf /mkimage-arch $ROOTFS
 	+ cp -rf ./docker-arch $ROOTFS
@@ -81,6 +87,7 @@ $ sudo docker build -t archlinuxjp/docker-arch .
 $ sudo docker login
 $ sudo docker push archlinuxjp/docker-arch
 
+# FROM archlinuxjp/archlinux
 $ sudo docker pull archlinuxjp/docker-arch
 $ sudo docker run -v /var/run/docker.sock:/var/run/docker.sock --privileged -d -it archlinuxjp/docker-arch /bin/bash
 $ export id=`sudo docker ps -q | peco`
@@ -99,5 +106,5 @@ $ sudo docker push archlinuxjp/archlinux
 
 2017.07.29 travisで10分間出力がない場合に処理を停止する問題(yaourt build時)は`travis_retry`を使うことで解決しました。 [#3](https://github.com/ArchLinuxJP/docker-arch/issues/3)
 
-2017.10.22 mirrorの不具合が2日連続で出ていたので`ftp.tsukuba.wide.ad.jp -> http://mirror.archlinux.jp/`に変更しました。[link](https://www.archlinux.jp/mirrors/status/)
+2017.10.22 mirrorの不具合が2日連続で出ていたので`ftp.tsukuba.wide.ad.jp -> http://mirror.archlinux.jp`に変更しました。[link](https://www.archlinux.jp/mirrors/status/)
 
