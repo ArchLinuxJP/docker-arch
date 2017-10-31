@@ -96,6 +96,18 @@ $ sudo docker exec $id /bin/bash /mkimage-arch-jp.sh
 $ sudo docker push archlinuxjp/archlinux
 ```
 
+## travis + slack
+
+```sh
+script:
+	export text=`docker images`;
+	curl -X POST "$SLACK_WEB_URL" -d "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"docker\", \"text\":\"$text\", \"icon_emoji\":\":docker:\"}";
+
+notifications:
+  slack:
+    secure: j8HSA3jwhQJ9dibD1rFbbBJ7BjefWNXOf5d1b7gMvn/yxiuzMrsxIN3rEXj6V0hHnjAcHHSSVGCZO8MGu9MDfXQHx1AoyxS3i0qLuMGD8EHeuTQJ6usV9pySE4A9A+yGbWh4reKLfqwPcdqy3LKbvaIIYkYzCHTtJw3lgS/dqxGiLgziiz2cUbo8yQaqKyjeXHWX/4xiHXNNSdixJK4KzltfJBYz9BMdT766+cADcLH922CIYdUsjSsPI27O1WA1Fd2sTb63xTn224F2hZTQrIEONLjB0/EWsHiAYXsX8uu3ghLC8mLrwUpF95FD/S8lK+GgrIKPZUyRJCNQf0ET0lnU2RiHAp5K2jOzM4DeN3wthTLdLDiKwt6Sq5RpsN23fBntxyAdMC4sIrgqs4JGKjqGR8Gdl6NrfzxrZF1bsTWWMGOmUzy7nHMKo7J2T2gqI2gDeaX0YJ1C3RSQ+6RymJlalEJx4ywY/9774VQ9CVbYm0DMUG+Xk+MTjWdR5/UErU/XeCne3Qgb0fPyanysVKhvg8dqMEImFDlZUYZxNkEvfGIhXj4kaQYtgdY7J3Or4DXgzK8n5TdUFmMdQo5kL35lOedPxX0T2haIX8Wodlpm2rJwFiJF4ZL4EPCQYfeRPpwfpd1uQTe0C+bLVKGL7illp7VyngCo0INIw6O3rCQ=
+```
+
 ## 履歴
 
 2017.01.29 複数あったGitHubリポジトリを`archlinuxjp/docker-arch`に集約しました。 [blog](https://archlinuxjp.github.io/blog/post/docker-arch-2/)
