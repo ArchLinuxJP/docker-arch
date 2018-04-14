@@ -29,10 +29,7 @@ PKGIGNORE=(
     jfsutils
     linux
     lvm2
-    man-db
-    man-pages
     mdadm
-    nano
     netctl
     openresolv
     pciutils
@@ -43,6 +40,7 @@ PKGIGNORE=(
     usbutils
     vi
     xfsprogs
+    docker
 )
 IFS=','
 PKGIGNORE="${PKGIGNORE[*]}"
@@ -80,7 +78,7 @@ arch-chroot $ROOTFS /bin/sh -c 'mkdir -p /run/shm'
 cp -rf /docker-arch $ROOTFS
 cp -rf /mkimage-arch $ROOTFS
 arch-chroot $ROOTFS /bin/sh -c 'cp -rf /docker-arch /usr/bin/docker-arch;chmod +x /usr/bin/docker-arch;export PATH=$PATH:/usr/bin'
-arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged;pacman-key --populate $ARCH_KEYRING; pacman -S docker --noconfirm; pacman -Scc --noconfirm;pkill gpg-agent"
+arch-chroot $ROOTFS /bin/sh -c "haveged -w 1024; pacman-key --init; pkill haveged; pacman -Rs --noconfirm haveged;pacman-key --populate $ARCH_KEYRING; pacman -S docker --noconfirm; pacman -Scc --noconfirm"
 #arch-chroot $ROOTFS /bin/sh -c "ln -s /usr/share/zoneinfo/JST /etc/localtime"
 #echo -e "en_US.UTF-8 UTF-8\nja_JP.UTF-8 UTF-8" > $ROOTFS/etc/locale.gen
 #arch-chroot $ROOTFS locale-gen
