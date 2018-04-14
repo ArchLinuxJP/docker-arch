@@ -120,3 +120,4 @@ notifications:
 
 2017.10.22 mirrorの不具合が2日連続で出ていたので`ftp.tsukuba.wide.ad.jp -> http://mirror.archlinux.jp`に変更しました。[link](https://www.archlinux.jp/mirrors/status/)
 
+2018.04.12 この日からtravisでbuildが失敗するようになりました。`There was an error while trying to fetch the log.`でログを表示することもできません。
