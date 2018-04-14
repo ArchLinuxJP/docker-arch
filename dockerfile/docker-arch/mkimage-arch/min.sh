@@ -43,6 +43,7 @@ PKGIGNORE=(
     usbutils
     vi
     xfsprogs
+    docker
 )
 IFS=','
 PKGIGNORE="${PKGIGNORE[*]}"
