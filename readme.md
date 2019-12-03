@@ -1,3 +1,11 @@
+現在、Arch Linuxの公式と思われるDocker Imageが日々更新されるようになっています。したがって、このリポジトリ及び、公開していたDocker Imageは役目を終えました。当該イメージは更新されていないので、できれば公式のものをお使いください。
+
+https://hub.docker.com/r/archlinux/base
+
+```
+$ docker run -it archlinux/base
+```
+
 # docker-arch
 
 [![Build Status](https://travis-ci.org/ArchLinuxJP/docker-archlinux.svg?branch=master)](https://travis-ci.org/ArchLinuxJP/docker-arch)
